@@ -24,16 +24,15 @@
 
 require('../../../config.php');
 
-require_login();
-
 $courseid = required_param('id', PARAM_INT);
+$course = get_course($courseid);
+
+require_login($course);
 
 $url = new moodle_url('/course/format/learningmap/view.php', ['id' => $courseid]);
 $PAGE->set_url($url);
-$PAGE->set_context(context_course::instance($id));
+$PAGE->set_context(context_course::instance($course->id));
 
-$course = get_course($courseid);
-
-$PAGE->set_heading($course->name);
+$PAGE->set_heading($course->fullname);
 echo $OUTPUT->header();
 echo $OUTPUT->footer();
